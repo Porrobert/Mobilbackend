@@ -27,7 +27,7 @@ app.get('/kiadas', (req, res) => {
     
     connection.connect()
     
-    connection.query('SELECT * from kiadas', function (err, rows, fields) {
+    connection.query('SELECT* FROM kiadas INNER JOIN koltsegfajta ON kiadas.kiadas_koltsegfajta=koltsegfajta.fajta_id ', function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
