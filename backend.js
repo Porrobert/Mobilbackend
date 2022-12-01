@@ -1,7 +1,22 @@
 const express = require('express')
-var cors = require('cors')
+const cors = require('cors')
+const mysql = require('mysql')
 const app = express()
 const port = 3000
+var connection
+
+function kapcsolat() {
+  
+
+
+connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'koltsegvetes_pr'
+  })
+  connection.connect
+}
 
 app.use(cors())
 
@@ -16,16 +31,8 @@ app.get('/', (req, res) => {
 
 
 app.get('/kiadas', (req, res) => {
-
-    var mysql = require('mysql')
-    var connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'koltsegvetes_pr'
-    })
     
-    connection.connect()
+    kapcsolat()
     
     connection.query('SELECT* FROM kiadas INNER JOIN koltsegfajta ON kiadas.kiadas_koltsegfajta=koltsegfajta.fajta_id ', function (err, rows, fields) {
       if (err) throw err
@@ -33,26 +40,13 @@ app.get('/kiadas', (req, res) => {
       console.log(rows)
       res.send(rows)
     })
-    
     connection.end()
-
-
-
-    
   })
 
 
-app.get('/koltsegfajta', (req, res) => {
+app.get('/koltsegfajta', (req, res) => {  
 
-    var mysql = require('mysql')
-    var connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'koltsegvetes_pr'
-    })
-    
-    connection.connect()
+  kapcsolat()
     
     connection.query('SELECT * from koltsegfajta', function (err, rows, fields) {
       if (err) throw err
@@ -60,12 +54,7 @@ app.get('/koltsegfajta', (req, res) => {
       console.log(rows)
       res.send(rows)
     })
-    
     connection.end()
-
-
-
-    
   })
 
 
