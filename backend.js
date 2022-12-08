@@ -72,7 +72,19 @@ app.get('/osszegfajta', (req, res) => {
   })
 
 
-
+//----------------------------------------- kiadas felvitel
+app.post('/kiadas', (req, res) => {
+  
+  kapcsolat()
+  
+  connection.query('insert into kiadas values (null, '+req.body.bevitel1+')', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send("Sikerült a felvitel!")
+  })
+  
+  connection.end()
+})
 
   
 
