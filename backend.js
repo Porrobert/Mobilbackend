@@ -58,6 +58,20 @@ app.get('/koltsegfajta', (req, res) => {
   })
 
 
+app.get('/osszegfajta', (req, res) => {  
+
+  kapcsolat()
+    
+    connection.query('SELECT * from koltsegfajta', function (err, rows, fields) {
+      if (err) throw err
+    
+      console.log(rows)
+      res.send(rows)
+    })
+    connection.end()
+  })
+
+
 
 
   
