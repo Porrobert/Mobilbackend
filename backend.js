@@ -77,7 +77,7 @@ app.get('/rendszerezes', (req, res) => {
 
   kapcsolat()
     
-    connection.query(`SELECT koltsegfajta.fajta_nev, SUM(kiadas.kiadas_ar) 
+    connection.query(`SELECT koltsegfajta.fajta_kep, koltsegfajta.fajta_nev, SUM(kiadas.kiadas_ar) as osszeg
     FROM koltsegfajta
     INNER JOIN kiadas
     ON koltsegfajta.fajta_id=kiadas.kiadas_koltsegfajta
@@ -90,6 +90,18 @@ app.get('/rendszerezes', (req, res) => {
     connection.end()
   })
 
+app.get('/osszegzes', (req, res) => {  
+
+    kapcsolat()
+      
+      connection.query('SELECT SUM(kiadas_ar) as osszeg FROM kiadas', function (err, rows, fields) {
+        if (err) throw err
+      
+        console.log(rows)
+        res.send(rows)
+      })
+      connection.end()
+    })
 
 //----------------------------------------- kiadas felvitel
 app.post('/kiadas', (req, res) => {
