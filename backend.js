@@ -62,7 +62,7 @@ app.get('/osszegfajta', (req, res) => {
 
   kapcsolat()
     
-    connection.query('SELECT * from koltsegfajta', function (err, rows, fields) {
+    connection.query('SELECT SUM(kiadas_ar) as szereles FROM kiadas WHERE kiadas_nev="Szerelés"', function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
