@@ -117,6 +117,22 @@ app.post('/kiadas', (req, res) => {
   connection.end()
 })
 
+app.post('/felvitel', (req, res) => {
+  
+  kapcsolat()
+  
+  connection.query("INSERT INTO uzenet  VALUES (NULL, '"+req.body.bevitel1+"', '"+req.body.bevitel2+"', '"+req.body.bevitel3+"')", (err, rows, fields) => {
+    if (err) 
+        console.log( err)
+      else{
+      console.log("Sikeres felvitel!")
+      res.send("Sikeres felvitel!")}
+      
+    })
+  
+  connection.end()
+})
+
   
 
   
