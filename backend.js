@@ -103,25 +103,12 @@ app.get('/osszegzes', (req, res) => {
       connection.end()
     })
 
-//----------------------------------------- kiadas felvitel
-app.post('/kiadas', (req, res) => {
-  
-  kapcsolat()
-  
-  connection.query('insert into kiadas values (null, '+req.body.bevitel1+')', (err, rows, fields) => {
-    if (err) throw err
-  
-    res.send("Sikerült a felvitel!")
-  })
-  
-  connection.end()
-})
 
 app.post('/felvitel', (req, res) => {
   
   kapcsolat()
   
-  connection.query("INSERT INTO uzenet  VALUES (NULL, '"+req.body.bevitel1+"', '"+req.body.bevitel2+"', '"+req.body.bevitel3+"')", (err, rows, fields) => {
+  connection.query("INSERT INTO kiadas  VALUES (NULL, "+req.body.bevitel1+", "+req.body.bevitel2+", '"+req.body.bevitel3+"','"+req.body.bevitel4+"')", (err, rows, fields) => {
     if (err) 
         console.log( err)
       else{
