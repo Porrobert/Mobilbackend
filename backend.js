@@ -120,6 +120,22 @@ app.post('/felvitel', (req, res) => {
   connection.end()
 })
 
+app.delete('/torles', (req, res) => {
+  
+  kapcsolat()
+  
+  connection.query("DELETE FROM kiadas WHERE kiadas.kiadas_id = "+req.body.bevitel1, (err, rows, fields) => {
+    if (err) 
+        console.log( err)
+      else{
+      console.log("Sikeres törlés!")
+      res.send("Sikeres törlés!")}
+      
+    })
+  
+  connection.end()
+})
+
   
 
   
