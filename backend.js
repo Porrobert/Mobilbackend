@@ -134,9 +134,142 @@ app.delete('/torles', (req, res) => {
     })
   
   connection.end()
+
 })
 
+//CSABA resze
+
+
+app.get('/bevetel2', (req, res) => {
+  const mysql = require('mysql')
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'koltsegvetes_pr'
+  })
   
+  connection.connect()
+  
+  connection.query('SELECT SUM( bevetel.bevetel_osszeg ) as osszeadva FROM bevetel', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send(rows)
+  })
+  
+  connection.end()
+})
+
+
+
+
+app.get('/fajta', (req, res) => {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
+    })
+    
+    connection.connect()
+    
+    connection.query('SELECT * from fajta', (err, rows, fields) => {
+      if (err) throw err
+    
+      res.send(rows)
+    })
+    
+    connection.end()
+  })
+
+  app.get('/bevetelfizetes', (req, res) => {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
+    })
+    
+    connection.connect()
+    
+    connection.query('SELECT * from bevetel where bevetel_fajta=1', (err, rows, fields) => {
+      if (err) throw err
+    
+      res.send(rows)
+    })
+    
+    connection.end()
+  })
+
+  app.get('/bevetel', (req, res) => {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
+    })
+    
+    connection.connect()
+    
+    connection.query('SELECT * from bevetel', (err, rows, fields) => {
+      if (err) throw err
+    
+      res.send(rows)
+    })
+    
+    
+    connection.end()
+  })
+
+  app.post('/felvitel', (req, res) => {
+
+    var mysql = require('mysql')
+    var connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
+    })
+    
+    connection.connect()
+    
+    connection.query("INSERT INTO bevetel  VALUES (NULL, "+req.body.bevitel1+", "+req.body.bevitel2+", '"+req.body.bevitel3+"')", function (err, rows, fields) {
+      if (err) 
+        console.log( err)
+      else{
+      console.log("Sikeres felvitel!")
+      res.send("Sikeres felvitel!")}
+      
+    })
+    
+    connection.end()
+
+    
+  })
+
+
+
+
+  app.delete('/beveteltorles', (req, res) => {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
+    })
+    
+    connection.connect()
+    connection.query('delete from bevetel where bevetel_id= '+req.body.bevitel1, (err, rows, fields) => {
+      if (err) console.log(err)
+		else
+		res.send("Sikerült a törlés")
+    })
+    connection.end()
+  })
 
   
     
