@@ -120,6 +120,22 @@ app.post('/felvitel', (req, res) => {
   connection.end()
 })
 
+
+app.post('/kereses', (req, res) => {
+  
+  kapcsolat()
+  let kereso='SELECT * FROM kiadas WHERE kiadas_nev LIKE "%'+req.body.bevitel1+'%"'
+  connection.query( kereso, (err, rows, fields) => {
+    if (err) 
+        console.log( err)
+      else{
+      res.send(rows)}
+      
+    })
+  
+  connection.end()
+})
+
 app.delete('/torles', (req, res) => {
   
   kapcsolat()
