@@ -210,7 +210,7 @@ app.get('/fajta', (req, res) => {
     
     connection.connect()
     
-    connection.query('SELECT * from bevetel where bevetel_fajta=1', (err, rows, fields) => {
+    connection.query('SELECT SUM(bevetel_osszeg) as osszeg2 FROM bevetel', (err, rows, fields) => {
       if (err) throw err
     
       res.send(rows)
