@@ -8,7 +8,6 @@ var connection
 function kapcsolat() {
   
 
-
 connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -90,18 +89,25 @@ app.get('/rendszerezes', (req, res) => {
     connection.end()
   })
 
-app.get('/osszegzes', (req, res) => {  
-
-    kapcsolat()
-      
-      connection.query('SELECT SUM(kiadas_ar) as osszeg FROM kiadas', function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log(rows)
-        res.send(rows)
-      })
-      connection.end()
+  app.get('/osszegzes', (req, res) => {
+    const mysql = require('mysql')
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'koltsegvetes_pr'
     })
+    
+    connection.connect()
+    
+    connection.query('SELECT SUM(kiadas_ar) as osszeg FROM kiadas', (err, rows, fields) => {
+      if (err) throw err
+    
+      res.send(rows)
+    })
+    
+    connection.end()
+  })
 
 
 app.post('/felvitel', (req, res) => {
@@ -136,7 +142,7 @@ app.post('/kereses', (req, res) => {
   connection.end()
 })
 
-app.delete('/torles', (req, res) => {
+app.delete('/kiadastorles', (req, res) => {
   
   kapcsolat()
   
@@ -240,7 +246,7 @@ app.get('/fajta', (req, res) => {
     connection.end()
   })
 
-  app.post('/felvitel', (req, res) => {
+  app.post('/felvitel2', (req, res) => {
 
     var mysql = require('mysql')
     var connection = mysql.createConnection({
